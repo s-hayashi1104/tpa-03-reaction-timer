@@ -1,0 +1,24 @@
+#container {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#container .grid {
+    margin: 100px auto; 
+    min-width: 200px;
+    width: 200px;
+    height: 200px;
+    border-collapse: collapse;
+}
+
+.grid td {
+    border: 1px solid black;
+    vertical-align: middle;
+    height: 20px;
+}
+
+.cell-active {
+    background-color: pink;
+}

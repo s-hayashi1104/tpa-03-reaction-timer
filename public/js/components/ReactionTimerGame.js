@@ -45,19 +45,28 @@ class ReactionTimerGame {
   }
 
   handleActiveCellSelected() {
-    if (this.countUpValue === 0) {
+    if (this.view.activeCellElRow === this.activeCellRow && this.view.activeCellElCol === this.activeCellCol && this.activeCellCol !== null && this.activeCellRow !== null) {
       this.view.deactivateCell(this.activeCellRow, this.activeCellCol);
+      this.activeCellRow = null;
+      this.activeCellCol = null;
       this.countUpValue += 1;
     } else {
       this.view.deactivateCell(this.activeCellRow2, this.activeCellCol2);
+      this.activeCellRow2 = null;
+      this.activeCellCol2 = null;
+      this.countUpValue += 1;
     }
     this.calculateTime();
   }
 
   calculateTime() {
+    let numberOfClick = 'first:';
+    if (this.countUpValue === 2) {
+      numberOfClick = 'second:';
+    }
     this.currentEndTime = new Date().getTime();
-    console.log(this.currentEndTime - this.currentStartTime);
-    if (this.countUpValue >= 2) {
+    console.log(`${numberOfClick} ${this.currentEndTime - this.currentStartTime}`);
+    if (this.countUpValue > 2) {
       this.countUpValue = 0;
     }
   }

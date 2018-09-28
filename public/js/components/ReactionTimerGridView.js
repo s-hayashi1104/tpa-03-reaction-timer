@@ -2,7 +2,10 @@ import { NUM_ROWS, NUM_COLS } from '../constants.js';
 
 class ReactionTimerGridView {
   constructor() {
-    this.activeCellEl = null;
+    this.activeCellElRow = null;
+    this.activeCellElCol = null;
+    this.activeCellEl2Row = null;
+    this.activeCellEl2Col = null;
     this.activeCellClickHandler = this.handleActiveCellClick.bind(this);
     this.callbacks = {};
   }
@@ -49,12 +52,29 @@ class ReactionTimerGridView {
   }
 
   activateCell(rowIndex, colIndex) {
-    const cellEl = this.getCellByPosition(rowIndex, colIndex);
-    cellEl.className = 'cell-active';
-    cellEl.addEventListener('click', this.activeCellClickHandler);
+    if (this.activeCellElRow === null) {
+      this.activeCellElRow = rowIndex;
+      this.activeCellElCol = colIndex;
+      const cellEl = this.getCellByPosition(this.activeCellElRow, this.activeCellElCol);
+      cellEl.className = 'cell-active';
+      cellEl.addEventListener('click', this.activeCellClickHandler);
+    } else {
+      this.activeCellEl2Row = rowIndex;
+      this.activeCellEl2Col = colIndex;
+      const cellEl = this.getCellByPosition(this.activeCellEl2Row, this.activeCellEl2Col);
+      cellEl.className = 'cell-active';
+      cellEl.addEventListener('click', this.activeCellClickHandler);
+    }
   }
 
   deactivateCell(rowIndex, colIndex) {
+    if (this.activeCellElRow === rowIndex && this.activeCellElCol === colIndex) {
+      this.activeCellElRow = null;
+      this.activeCellElCol = null;
+    } else {
+      this.activeCellEl2Row = null;
+      this.activeCellEl2Col = null;
+    }
     const cellEl = this.getCellByPosition(rowIndex, colIndex);
     if (cellEl) {
       cellEl.className = '';

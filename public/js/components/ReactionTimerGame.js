@@ -11,6 +11,7 @@ class ReactionTimerGame {
     this.activeCellCol2 = null;
     this.currentStartTime = null;
     this.currentEndTime = null;
+    this.countUpValue = 0;
   }
 
   handleRoundStart() {
@@ -44,9 +45,9 @@ class ReactionTimerGame {
   }
 
   handleActiveCellSelected() {
-    if (this.view.countUpValue === 1) {
+    if (this.countUpValue === 0) {
       this.view.deactivateCell(this.activeCellRow, this.activeCellCol);
-      this.view.countUpValue += 1;
+      this.countUpValue += 1;
     } else {
       this.view.deactivateCell(this.activeCellRow2, this.activeCellCol2);
     }
@@ -56,6 +57,9 @@ class ReactionTimerGame {
   calculateTime() {
     this.currentEndTime = new Date().getTime();
     console.log(this.currentEndTime - this.currentStartTime);
+    if (this.countUpValue >= 2) {
+      this.countUpValue = 0;
+    }
   }
 
   init() {

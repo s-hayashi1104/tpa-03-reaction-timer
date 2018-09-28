@@ -5,12 +5,11 @@ class ReactionTimerGridView {
     this.activeCellEl = null;
     this.activeCellClickHandler = this.handleActiveCellClick.bind(this);
     this.callbacks = {};
-    this.countUpValue = 0;
   }
 
   initDomAndListeners() {
     document.querySelector('.btn-start')
-      .addEventListener('click', this.handleBtnStart.bind(this), this.countUpValue += 1);
+      .addEventListener('click', this.handleBtnStart.bind(this));
   }
 
   registerActiveCellSelectedCallback(callback) {

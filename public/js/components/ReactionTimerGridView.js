@@ -55,7 +55,6 @@ class ReactionTimerGridView {
   }
 
   deactivateCell(rowIndex, colIndex) {
-    return
     const cellEl = this.getCellByPosition(rowIndex, colIndex);
     if (cellEl) {
       cellEl.className = '';

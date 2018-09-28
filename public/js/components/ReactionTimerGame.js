@@ -44,9 +44,12 @@ class ReactionTimerGame {
   }
 
   handleActiveCellSelected() {
-    // クリック回数を保持して一回目はCellRow２回めはCellRow2??
-    // ただそうするとどちらをクリックしてもいいという要件を満たさない気がする
-    this.view.deactivateCell(this.activeCellRow, this.activeCellCol);
+    if (this.view.countUpValue === 1) {
+      this.view.deactivateCell(this.activeCellRow, this.activeCellCol);
+      this.view.countUpValue += 1;
+    } else {
+      this.view.deactivateCell(this.activeCellRow2, this.activeCellCol2);
+    }
     this.calculateTime();
   }
 

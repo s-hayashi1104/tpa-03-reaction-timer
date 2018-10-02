@@ -7,6 +7,7 @@ class ReactionTimerGridView {
     this.activeCellEl2Row = null;
     this.activeCellEl2Col = null;
     this.activeCellClickHandler = this.handleActiveCellClick.bind(this);
+    this.activeCellClickHandler2 = this.handleActiveCellClick2.bind(this);
     this.callbacks = {};
   }
 
@@ -17,6 +18,10 @@ class ReactionTimerGridView {
 
   registerActiveCellSelectedCallback(callback) {
     this.callbacks.handleActiveCellSelected = callback;
+  }
+
+  registerActiveCellSelectedCallback2(callback) {
+    this.callbacks.handleActiveCellSelected2 = callback;
   }
 
   registerRoundStartCallback(callback) {
@@ -63,7 +68,7 @@ class ReactionTimerGridView {
       this.activeCellEl2Col = colIndex;
       const cellEl = this.getCellByPosition(this.activeCellEl2Row, this.activeCellEl2Col);
       cellEl.className = 'cell-active';
-      cellEl.addEventListener('click', this.activeCellClickHandler);
+      cellEl.addEventListener('click', this.activeCellClickHandler2);
     }
   }
 
@@ -71,19 +76,28 @@ class ReactionTimerGridView {
     if (this.activeCellElRow === rowIndex && this.activeCellElCol === colIndex) {
       this.activeCellElRow = null;
       this.activeCellElCol = null;
+      const cellEl = this.getCellByPosition(rowIndex, colIndex);
+      if (cellEl) {
+        cellEl.className = '';
+        cellEl.removeEventListener('click', this.activeCellClickHandler);
+      }
     } else {
       this.activeCellEl2Row = null;
       this.activeCellEl2Col = null;
-    }
-    const cellEl = this.getCellByPosition(rowIndex, colIndex);
-    if (cellEl) {
-      cellEl.className = '';
-      cellEl.removeEventListener('click', this.activeCellClickHandler);
+      const cellEl = this.getCellByPosition(rowIndex, colIndex);
+      if (cellEl) {
+        cellEl.className = '';
+        cellEl.removeEventListener('click', this.activeCellClickHandler2);
+      }
     }
   }
 
   handleActiveCellClick() {
     this.callbacks.handleActiveCellSelected();
+  }
+
+  handleActiveCellClick2() {
+    this.callbacks.handleActiveCellSelected2();
   }
 }
 

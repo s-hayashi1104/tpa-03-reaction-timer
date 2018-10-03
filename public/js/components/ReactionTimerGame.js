@@ -40,18 +40,8 @@ class ReactionTimerGame {
     this.view.activateCell(randomRowIndex2, randomColIndex2);
   }
 
-  handleActiveCellSelected() {
-    this.view.deactivateCell(this.activeCellRow, this.activeCellCol);
-    this.activeCellRow = null;
-    this.activeCellCol = null;
-    this.countUpValue += 1;
-    this.calculateTime();
-  }
-
-  handleActiveCellSelected2() {
-    this.view.deactivateCell(this.activeCellRow2, this.activeCellCol2);
-    this.activeCellRow2 = null;
-    this.activeCellCol2 = null;
+  handleActiveCellSelected(row, col) {
+    this.view.deactivateCell(row, col);
     this.countUpValue += 1;
     this.calculateTime();
   }
@@ -72,7 +62,6 @@ class ReactionTimerGame {
     this.view = new ReactionTimerGridView();
 
     this.view.registerActiveCellSelectedCallback(this.handleActiveCellSelected.bind(this));
-    this.view.registerActiveCellSelectedCallback2(this.handleActiveCellSelected2.bind(this));
     this.view.registerRoundStartCallback(this.handleRoundStart.bind(this));
 
     this.view.initDomAndListeners();

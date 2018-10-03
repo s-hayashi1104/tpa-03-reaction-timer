@@ -1,13 +1,11 @@
-import { NUM_ROWS, NUM_COLS } from '../constants.js';
+import {
+  NUM_ROWS,
+  NUM_COLS
+} from '../constants.js';
 
 class ReactionTimerGridView {
   constructor() {
-    this.activeCellElRow = null;
-    this.activeCellElCol = null;
-    this.activeCellEl2Row = null;
-    this.activeCellEl2Col = null;
     this.activeCellClickHandler = this.handleActiveCellClick.bind(this);
-    this.activeCellClickHandler2 = this.handleActiveCellClick2.bind(this);
     this.callbacks = {};
   }
 
@@ -18,10 +16,6 @@ class ReactionTimerGridView {
 
   registerActiveCellSelectedCallback(callback) {
     this.callbacks.handleActiveCellSelected = callback;
-  }
-
-  registerActiveCellSelectedCallback2(callback) {
-    this.callbacks.handleActiveCellSelected2 = callback;
   }
 
   registerRoundStartCallback(callback) {
@@ -57,47 +51,24 @@ class ReactionTimerGridView {
   }
 
   activateCell(rowIndex, colIndex) {
-    if (this.activeCellElRow === null) {
-      this.activeCellElRow = rowIndex;
-      this.activeCellElCol = colIndex;
-      const cellEl = this.getCellByPosition(this.activeCellElRow, this.activeCellElCol);
-      cellEl.className = 'cell-active';
-      cellEl.addEventListener('click', this.activeCellClickHandler);
-    } else {
-      this.activeCellEl2Row = rowIndex;
-      this.activeCellEl2Col = colIndex;
-      const cellEl = this.getCellByPosition(this.activeCellEl2Row, this.activeCellEl2Col);
-      cellEl.className = 'cell-active';
-      cellEl.addEventListener('click', this.activeCellClickHandler2);
-    }
+    const cellEl = this.getCellByPosition(rowIndex, colIndex);
+    cellEl.className = 'cell-active';
+    cellEl.addEventListener('click', this.activeCellClickHandler);
   }
 
   deactivateCell(rowIndex, colIndex) {
-    if (this.activeCellElRow === rowIndex && this.activeCellElCol === colIndex) {
-      this.activeCellElRow = null;
-      this.activeCellElCol = null;
-      const cellEl = this.getCellByPosition(rowIndex, colIndex);
-      if (cellEl) {
-        cellEl.className = '';
-        cellEl.removeEventListener('click', this.activeCellClickHandler);
-      }
-    } else {
-      this.activeCellEl2Row = null;
-      this.activeCellEl2Col = null;
-      const cellEl = this.getCellByPosition(rowIndex, colIndex);
-      if (cellEl) {
-        cellEl.className = '';
-        cellEl.removeEventListener('click', this.activeCellClickHandler2);
-      }
+    const cellEl = this.getCellByPosition(rowIndex, colIndex);
+    if (cellEl) {
+      cellEl.className = '';
+      cellEl.removeEventListener('click', this.activeCellClickHandler);
     }
   }
 
-  handleActiveCellClick() {
-    this.callbacks.handleActiveCellSelected();
-  }
-
-  handleActiveCellClick2() {
-    this.callbacks.handleActiveCellSelected2();
+  handleActiveCellClick(event) {
+    const position = (event.target.id.split(':'));
+    const row = position[0];
+    const col = position[1];
+    this.callbacks.handleActiveCellSelected(row, col);
   }
 }
 
